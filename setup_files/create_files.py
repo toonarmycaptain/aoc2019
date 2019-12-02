@@ -7,14 +7,36 @@ def make_files():
         day_path = Path(f'dec_{day}{ordinal(day)}')
         day_path.mkdir(exist_ok=True)
 
-        with open(Path(day_path, '__init__.py'), 'w+') as init:
-            init.write('')
+        try:
+            with open(Path(day_path, '__init__.py'), 'x') as init:
+                init.write('')
+        except FileExistsError:
+            pass
+        # Part 1
+        try:
+            with open(Path(day_path, f'dec_{day}{ordinal(day)}_solution_part_1.py'), 'x') as solution:
+                solution.write(f'"""Advent of Code solution December {day}{ordinal(day)}"""')
+        except FileExistsError:
+            pass
 
-        with open(Path(day_path, f'dec_{day}{ordinal(day)}.py'), 'w+') as solution:
-            solution.write(f'"""Advent of Code solution December {day}{ordinal(day)}"""')
+        try:
+            with open(Path(day_path, f'test_dec_{day}{ordinal(day)}_solution_part_1.py'), 'x') as test_file:
+                test_file.write(f'"""Tests for Advent of Code solution December {day}{ordinal(day)} part 1"""')
+        except FileExistsError:
+            pass
 
-        with open(Path(day_path, f'test_dec_{day}{ordinal(day)}.py'), 'w+') as test_file:
-            test_file.write(f'"""Tests for Advent of Code solution December {day}{ordinal(day)}"""')
+            # Part 2
+            try:
+                with open(Path(day_path, f'dec_{day}{ordinal(day)}_solution_part_2.py'), 'x') as solution:
+                    solution.write(f'"""Advent of Code solution December {day}{ordinal(day)} part 2"""')
+            except FileExistsError:
+                pass
+
+            try:
+                with open(Path(day_path, f'test_dec_{day}{ordinal(day)}_solution_part_2.py'), 'x') as test_file:
+                    test_file.write(f'"""Tests for Advent of Code solution December {day}{ordinal(day)} part 2"""')
+            except FileExistsError:
+                pass
 
 
 def ordinal(num):
