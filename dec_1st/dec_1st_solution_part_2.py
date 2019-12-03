@@ -31,18 +31,10 @@ from typing import List
 from dec_1st.dec_1st_solution_part_1 import mass_fuel_req
 
 
-def fuel_fuel_req(module_fuel: int) -> int:
+def fuel_fuel_req(unfuelled_fuel: int) -> int:
     total_fuel_fuel_req = 0
-    # Init to calculate:
-    unfuelled_fuel = module_fuel
-    while True:
-        extra_fuel = mass_fuel_req(unfuelled_fuel)
-
-        if extra_fuel:
-            total_fuel_fuel_req += extra_fuel
-            unfuelled_fuel = extra_fuel
-        else:
-            break
+    while unfuelled_fuel := mass_fuel_req(unfuelled_fuel):  # Breaks when extra_fuel is 0.
+        total_fuel_fuel_req += unfuelled_fuel
 
     return total_fuel_fuel_req
 
