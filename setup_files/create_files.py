@@ -12,36 +12,37 @@ def create_day_files(day: int):
     day_path = Path(f'dec_{day}{ordinal(day)}')
     day_path.mkdir(exist_ok=True)
 
-    try:
-        with open(Path(day_path, '__init__.py'), 'x') as init:
-            init.write('')
-    except FileExistsError:
-        pass
-    # Part 1
-    try:
-        with open(Path(day_path, f'dec_{day}{ordinal(day)}_solution_part_1.py'), 'x') as solution:
-            solution.write(f'"""Advent of Code solution December {day}{ordinal(day)} part 1"""')
-    except FileExistsError:
-        pass
+    init_filepath = Path(day_path, '__init__.py')
+    create_file(filepath=init_filepath)
 
+    for part_numeral in (1, 2):
+        solution_filepath = Path(day_path, f'dec_{day}{ordinal(day)}_solution_part_{part_numeral}.py')
+        solution_content = f'"""Advent of Code solution December {day}{ordinal(day)} part {part_numeral}"""'
+        create_file(filepath=solution_filepath,
+                    content=solution_content)
+
+        test_filepath = Path(day_path, f'test_dec_{day}{ordinal(day)}_solution_part_{part_numeral}.py')
+        test_file_content = f'"""Tests for Advent of Code solution December {day}{ordinal(day)} part {part_numeral}"""'
+        create_file(filepath=test_filepath,
+                    content=test_file_content)
+
+    # Blank puzzle input.
+    puzzle_input_filepath = Path(day_path, f'dec_{day}{ordinal(day)}_puzzle_input.txt')
+    create_file(puzzle_input_filepath)
+
+
+def create_file(filepath: Path, content=None, error_msg: str = None):
     try:
-        with open(Path(day_path, f'test_dec_{day}{ordinal(day)}_solution_part_1.py'), 'x') as test_file:
-            test_file.write(f'"""Tests for Advent of Code solution December {day}{ordinal(day)} part 1"""')
+        with open(filepath, 'x') as file:
+            if content:
+                file.write(content)
+        print(f'Created {filepath.name}')
     except FileExistsError:
-        pass
+        if error:
+            print(error_msg)
+        else:
+            print(f'Did not create {filepath.name}, as it already exists.')
 
-        # Part 2
-        try:
-            with open(Path(day_path, f'dec_{day}{ordinal(day)}_solution_part_2.py'), 'x') as solution:
-                solution.write(f'"""Advent of Code solution December {day}{ordinal(day)} part 2"""')
-        except FileExistsError:
-            pass
-
-        try:
-            with open(Path(day_path, f'test_dec_{day}{ordinal(day)}_solution_part_2.py'), 'x') as test_file:
-                test_file.write(f'"""Tests for Advent of Code solution December {day}{ordinal(day)} part 2"""')
-        except FileExistsError:
-            pass
 
 def ordinal(num):
     """
@@ -53,7 +54,7 @@ def ordinal(num):
 
     SUFFIXES = {1: 'st', 2: 'nd', 3: 'rd'}
     # Check for 11-14 because those are abnormal
-    if int(num_str[-2:]) > 10 and int(num_str[-2:]) < 14:
+    if 10 < int(num_str[-2:]) < 14:
         return 'th'
     else:
         suffix = SUFFIXES.get(int(num_str[-1:]), 'th')
