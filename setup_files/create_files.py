@@ -1,9 +1,11 @@
 from pathlib import Path
 
+
 def make_files():
     days_in_december = 25
-    for day in range(1, days_in_december +1):
+    for day in range(1, days_in_december + 1):
         create_day_files(day)
+
 
 def create_day_files(day: int):
     # Create folder
