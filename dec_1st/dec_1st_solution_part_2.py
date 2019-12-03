@@ -24,12 +24,14 @@ The fuel required by a module of mass 100756 and its fuel is:
 33583 + 11192 + 3728 + 1240 + 411 + 135 + 43 + 12 + 2 = 50346.
 What is the sum of the fuel requirements for all of the modules on your spacecraft when also taking
 into account the mass of the added fuel? (Calculate the fuel requirements for each module
-separately, then add them all up at the end.)"""
+separately, then add them all up at the end.)
+"""
 from typing import List
 
-from dec_1st.dec_1st_solution_part_1 import PUZZLE_INPUT, mass_fuel_req
+from dec_1st.dec_1st_solution_part_1 import mass_fuel_req
 
-def fuel_fuel_req(module_fuel: int) ->int:
+
+def fuel_fuel_req(module_fuel: int) -> int:
     total_fuel_fuel_req = 0
     # Init to calculate:
     unfuelled_fuel = module_fuel
@@ -44,10 +46,12 @@ def fuel_fuel_req(module_fuel: int) ->int:
 
     return total_fuel_fuel_req
 
+
 def module_fuel_req_with_fuel(module_mass: int) -> int:
     module_fuel = mass_fuel_req(module_mass)
     fuel_fuel = fuel_fuel_req(module_fuel)
     return module_fuel + fuel_fuel
+
 
 def sum_of_fuel_requirements_with_fuel(module_masses: List[int]) -> int:
     fuel_reqs = [module_fuel_req_with_fuel(module_mass) for module_mass in module_masses]
