@@ -38,7 +38,7 @@ def create_file(filepath: Path, content=None, error_msg: str = None):
                 file.write(content)
         print(f'Created {filepath.name}')
     except FileExistsError:
-        if error:
+        if error_msg:
             print(error_msg)
         else:
             print(f'Did not create {filepath.name}, as it already exists.')
