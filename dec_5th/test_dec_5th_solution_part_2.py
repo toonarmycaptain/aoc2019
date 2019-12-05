@@ -1,0 +1,1 @@
+"""Tests for Advent of Code solution December 5th part 2"""
