@@ -84,10 +84,11 @@ def make_tree(puzzle_input: List[str]) -> Dict[str, str]:
 
 
 def count_direct_and_indirect(puzzle_input: List[str]):
+    """Count objects orbited directly and indirectly by each satellite."""
     orbit_tree = make_tree(puzzle_input)
     total = 0
     for satellite in orbit_tree.values():
-        while satellite != 'COM':
+        while satellite != '':
             total += 1
             satellite = orbit_tree[satellite]
     return total
