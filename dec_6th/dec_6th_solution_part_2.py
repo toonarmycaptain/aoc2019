@@ -81,13 +81,12 @@ def shortest_distance(puzzle_input: List[str], satellite_name_a: str, satellite_
 
     distances_satellite_b = distance_to_objects(orbit_tree, satellite_name_b)
 
+    # & gives the intersection between the sets of keys, leaving only the objects they both orbit directly/indirectly
+    objects_in_common = set(distances_satellite_a.keys()) & set(distances_satellite_b.keys())
     distances = [
         # Sum of distance from satellite a, b to each object, object name
-        (distances_satellite_a[satellite] + distances_satellite_b[satellite], satellite)
-        for satellite
-        in set(distances_satellite_a.keys()) & set(distances_satellite_b.keys())
-        # & gives the intersection between the sets of keys, leaving only the
-        # objects they both orbit directly/indirectly
+        (distances_satellite_a[obj] + distances_satellite_b[obj], obj)
+        for obj in objects_in_common
     ]
 
     min_distance, satellite_name = min(distances)
