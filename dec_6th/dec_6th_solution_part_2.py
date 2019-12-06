@@ -54,26 +54,27 @@ they are orbiting - not between YOU and SAN.)
 
 Although it hasn't changed, you can still get your puzzle input.
 """
-from typing import Dict, List
+from typing import Dict, List, Tuple
 
 from dec_6th.dec_6th_solution_part_1 import make_tree
 
 
 def distance_to_objects(orbit_tree: Dict[str, str], satellite_name) -> Dict[str, int]:
+    """Get distance from satellite our object orbits to other objects."""
     object_distances: Dict[str, int] = {}
     satellite = orbit_tree[satellite_name]
     distance = 0
     while satellite != 'COM':
         # Get distance
-        object_distances[satellite] = distance
+        object_distances[satellite] = distance  # Start with distance to object directly orbited, =0 for out calc.
         distance += 1
         # Next satellite name
         satellite = orbit_tree[satellite]
-    print(f'{satellite=}, {satellite_name=}, {object_distances=}')
     return object_distances
 
 
-def shortest_distance(puzzle_input: List[str], satellite_name_a: str, satellite_name_b: str) -> int:
+def shortest_distance(puzzle_input: List[str], satellite_name_a: str, satellite_name_b: str) -> Tuple[int, str]:
+    """Find shortest distance between objects directly orbited by given satellites."""
     orbit_tree = make_tree(puzzle_input)
 
     distances_satellite_a = distance_to_objects(orbit_tree, satellite_name_a)
@@ -88,15 +89,12 @@ def shortest_distance(puzzle_input: List[str], satellite_name_a: str, satellite_
         # & gives the intersection between the sets of keys, leaving only the
         # objects they both orbit directly/indirectly
     ]
+
     min_distance, satellite_name = min(distances)
     return min_distance, satellite_name
 
 
 """
 from dec_6th.dec_6th_solution_part_1 import parse_puzzle_input
-shortest_distance(parse_puzzle_input('YOU', 'SAN)) = 385, 'QCT'
+shortest_distance(parse_puzzle_input(), 'YOU', 'SAN)) = 385, 'QCT'
 """
-
-from dec_6th.dec_6th_solution_part_1 import parse_puzzle_input
-
-print(shortest_distance(parse_puzzle_input(), 'YOU', 'SAN'))
