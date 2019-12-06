@@ -24,6 +24,6 @@ install:
 
 # command to run tests
 script:
-    - pytest --cov --mypy -vv
+    - pytest --cov=./ --mypy -vv
 
 after_success: coveralls
