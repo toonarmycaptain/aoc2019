@@ -82,17 +82,21 @@ def shortest_distance(puzzle_input: List[str], satellite_name_a: str, satellite_
 
     distances = [
         # Sum of distance from satellite a, b to each object, object name
-        distances_satellite_a[satellite] + distances_satellite_b[satellite]
+        (distances_satellite_a[satellite] + distances_satellite_b[satellite], satellite)
         for satellite
         in set(distances_satellite_a.keys()) & set(distances_satellite_b.keys())
         # & gives the intersection between the sets of keys, leaving only the
         # objects they both orbit directly/indirectly
     ]
-    min_distance = min(distances)
-    return min_distance
+    min_distance, satellite_name = min(distances)
+    return min_distance, satellite_name
 
 
 """
 from dec_6th.dec_6th_solution_part_1 import parse_puzzle_input
-shortest_distance(parse_puzzle_input('YOU', 'SAN)) = 385
+shortest_distance(parse_puzzle_input('YOU', 'SAN)) = 385, 'QCT'
 """
+
+from dec_6th.dec_6th_solution_part_1 import parse_puzzle_input
+
+print(shortest_distance(parse_puzzle_input(), 'YOU', 'SAN'))

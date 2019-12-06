@@ -17,8 +17,8 @@ def test_count_direct_and_indirect():
                               'J)K',
                               'K)L',
                               'K)YOU',
-                              'I)SAN', ], 'YOU', 'SAN') == 4
+                              'I)SAN', ], 'YOU', 'SAN') == 4, 'D'
 
 
 def test_solve():
-    assert shortest_distance(parse_puzzle_input(), 'SAN', 'YOU') == 385
+    assert shortest_distance(parse_puzzle_input(), 'SAN', 'YOU') == 385, 'QCT'
