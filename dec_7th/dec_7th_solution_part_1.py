@@ -2,7 +2,7 @@
 import itertools
 
 from pathlib import Path
-from typing import List
+from typing import Iterable, List
 
 from dec_5th.dec_5th_solution_part_1and_2 import TESTComputer as AmplifierComputer
 
@@ -21,8 +21,8 @@ def run_amplifier_computer(intcode_program, input_sequence: List[int]) -> int:
     return int(''.join(map(str, outputs)))
 
 
-def run_sequence(intcode_program: List[int], phase_input_sequence: List[int]) -> int:
-    final_output_signal = None
+def run_sequence(intcode_program: object, phase_input_sequence: Iterable[int]) -> int:
+    final_output_signal = 0
     initial_input = 0
     for phase_input in phase_input_sequence:
         output = run_amplifier_computer(intcode_program=intcode_program,
