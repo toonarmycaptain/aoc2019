@@ -8,8 +8,6 @@ from int_computer import IntComputer as AmpComputer
 
 
 def feedback_computer(intcode_program: List[int], phase_sequence: Sequence[int]):
-    if len(phase_sequence) != 5:
-        raise ValueError
     # Setup AmpComputers
     amp_computers: List[AmpComputer] = []
     for phase in phase_sequence:
