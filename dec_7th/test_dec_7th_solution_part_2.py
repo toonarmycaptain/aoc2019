@@ -2,10 +2,11 @@
 import pytest
 
 from dec_7th.dec_7th_solution_part_1 import parse_puzzle_input
-from dec_7th.dec_7th_solution_part_2 import (AmpComputer,
-                                             feedback_computer,
+from dec_7th.dec_7th_solution_part_2 import (feedback_computer,
                                              solve_part_2,
                                              )
+
+from int_computer import IntComputer as AmpComputer
 
 
 @pytest.mark.parametrize(

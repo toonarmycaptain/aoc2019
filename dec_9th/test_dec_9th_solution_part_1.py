@@ -1,7 +1,8 @@
 """Tests for Advent of Code solution December 9th part 1"""
 import pytest
 
-from dec_9th.dec_9th_solution_part_1 import BOOSTComputer, solve_part_1
+from dec_9th.dec_9th_solution_part_1 import solve_part_1
+from int_computer import IntComputer as BOOSTComputer
 
 
 @pytest.mark.parametrize(

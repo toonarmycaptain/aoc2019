@@ -4,7 +4,7 @@ import itertools
 from pathlib import Path
 from typing import Iterable, List
 
-from dec_5th.dec_5th_solution_part_1and_2 import TESTComputer as AmplifierComputer
+from int_computer import IntComputer as AmplifierComputer
 
 
 def parse_puzzle_input() -> List[int]:
