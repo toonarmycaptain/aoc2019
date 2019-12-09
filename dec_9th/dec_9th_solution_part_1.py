@@ -1,14 +1,16 @@
-"""Advent of Code solution December 7th part 2"""
-
-import itertools
-
-from typing import List, Optional, Sequence
-
-from dec_7th.dec_7th_solution_part_1 import parse_puzzle_input
+"""Advent of Code solution December 9th part 1"""
+from pathlib import Path
+from typing import List, Optional
 
 
-class AmpComputer:
-    """Thermal Environment Supervision Terminal (TEST) computer."""
+def parse_puzzle_input() -> List[int]:
+    problem_folder = Path(__file__).parent
+    with open(Path(problem_folder, 'dec_9th_puzzle_input.txt'), 'r') as input_file:
+        return [int(code) for code in input_file.readline().split(',')]
+
+
+class BOOSTComputer:
+    """Basic Operation Of System Test (BOOST) computer."""
 
     def __init__(self, intcode_program: List[int],
                  inputs: List[int] = None,
@@ -112,7 +114,7 @@ class AmpComputer:
         """
         if position > len(self._intcode_program):
             self._intcode_program += [0 for _ in
-                                      range(max(self._intcode_program) - len(self._intcode_program) + 1)]
+                                      range(max(self._intcode_program) - len(self._intcode_program))]
         return self._intcode_program[position]
 
     def addiction_opcode(self, position: int):
@@ -236,37 +238,14 @@ class AmpComputer:
         raise StopIteration
 
 
-def feedback_computer(intcode_program: List[int], phase_sequence: Sequence[int]):
-    if len(phase_sequence) != 5:
-        raise ValueError
-    # Setup AmpComputers
-    amp_computers: List[AmpComputer] = []
-    for phase in phase_sequence:
-        amp_computers.append(AmpComputer(intcode_program=intcode_program[:],
-                                         inputs=[phase],
-                                         pause_on_output=True))
-
-    next_input = 0  # Initial input given to first AmpComputer A
-    try:
-        while True:
-            for amp_computer in amp_computers:
-                amp_computer.inputs.append(next_input)
-                if amp_computer.run_program():
-                    raise StopIteration  # if run_program returns True instead of None, program has ended.
-                next_input = amp_computer.outputs[-1]
-    except StopIteration:
-        return amp_computers[-1].outputs[-1]
-
-
-def solve_part_2(intcode_program):
-    sequences = []
-    for sequence in itertools.permutations(list(range(5, 10))):
-        output = feedback_computer(intcode_program=intcode_program,
-                                   phase_sequence=sequence)
-        sequences.append(output)
-    return max(sequences)
+def solve_part_1():
+    c = BOOSTComputer(parse_puzzle_input(), inputs=[1])
+    c.run_program()
+    return c.outputs
 
 
 """
-solve_part_2(parse_puzzle_input())) = 3745599
+solve_part_1() =3765554916
 """
+
+print(solve_part_1())
