@@ -2,8 +2,7 @@
 
 import itertools
 
-from pathlib import Path
-from typing import Iterable, List, Optional, Sequence
+from typing import List, Optional, Sequence
 
 from dec_7th.dec_7th_solution_part_1 import parse_puzzle_input
 
@@ -110,8 +109,9 @@ class AmpComputer:
 
     def input_opcode(self, position: int):
         target = self._intcode_program[position + 1]
+        print(f'{self.inputs=}')
         self._intcode_program[target] = next(self.next_input)
-        print(self._intcode_program[target])
+        print(f'{self._intcode_program[target]=}')
         return position + 2
 
     def output_opcode(self, position: int):
@@ -122,6 +122,7 @@ class AmpComputer:
             source = self._intcode_program[position + 1]
 
         self.outputs.append(self._intcode_program[source])
+        print(f'output={self._intcode_program[source]=}')
         return position + 2
 
     def jump_if_true(self, position: int):
@@ -212,50 +213,35 @@ class AmpComputer:
 
 
 def feedback_computer(intcode_program: List[int], phase_sequence: Sequence[int]):
-    # computer = AmplifierComputer(intcode_program=intcode_program,
-    #                              phase_sequence=phase_sequence)
-    final_output_signal = None
-
     if len(phase_sequence) != 5:
         raise ValueError
     # Setup AmpComputers
     amp_computers: List[AmpComputer] = []
     for phase in phase_sequence:
-        amp_computers.append(AmpComputer(intcode_program=intcode_program,
+        amp_computers.append(AmpComputer(intcode_program=intcode_program[:],
                                          inputs=[phase]))
-    [print(f'init comp {amp_computers.index(amp_computer)=}: {amp_computer.inputs=}') for amp_computer in amp_computers]
 
     next_input = 0  # Initial input given to first AmpComputer A
     try:
         while True:
-            halt = False
             for amp_computer in amp_computers:
                 amp_computer.inputs.append(next_input)
                 if amp_computer.run_program():
-                    print(f'halted at {amp_computers.index(amp_computer)=}')
-                    # halt = True
                     raise StopIteration  # if run_program returns True instead of None, program has ended.
                 next_input = amp_computer.outputs[-1]
-                print(f'{amp_computers.index(amp_computer)=}, {amp_computer.inputs=},{amp_computer.outputs=}, {next_input=}')
-            # if halt:
-            #     raise StopIteration
     except StopIteration:
-        for comp in amp_computers:
-            print(f'{amp_computers.index(comp)=}, {comp.inputs=}, {comp.outputs=}')
-        return amp_computers[4].outputs
+        return amp_computers[-1].outputs[-1]
 
 
-# def solve_part_2(intcode_program):
-#     max_sequence = None
-#     max_output = 0
-#
-#     for sequence in itertools.permutations(list(range(5, 10))):
-#         result = 0
-#
-#         ###  run each sequence
-#
-#         if signal > max_output:
-#             max_output = signal
-#             max_sequence = sequence
-#
-#     return max_output, "".join(str(x) for x in max_sequence)
+def solve_part_2(intcode_program):
+    sequences = []
+    for sequence in itertools.permutations(list(range(5, 10))):
+        output = feedback_computer(intcode_program=intcode_program,
+                                   phase_sequence=sequence)
+        sequences.append(output)
+    return max(sequences)
+
+
+"""
+solve_part_2(parse_puzzle_input())) = 3745599
+"""

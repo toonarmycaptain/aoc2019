@@ -1,7 +1,8 @@
 """Tests for Advent of Code solution December 7th part 2"""
 import pytest
 
-from dec_7th.dec_7th_solution_part_2 import feedback_computer
+from dec_7th.dec_7th_solution_part_1 import parse_puzzle_input
+from dec_7th.dec_7th_solution_part_2 import feedback_computer, solve_part_2
 
 
 @pytest.mark.parametrize(
@@ -14,4 +15,7 @@ from dec_7th.dec_7th_solution_part_2 import feedback_computer
      ])
 def test_feedback_computer(test_intcode_program, test_phase_inputs, output):
     assert feedback_computer(intcode_program=test_intcode_program,
-                    phase_sequence=test_phase_inputs) == output
+                             phase_sequence=test_phase_inputs) == output
+
+def test_solve_part_two():
+    assert solve_part_2(parse_puzzle_input()) == 3745599
