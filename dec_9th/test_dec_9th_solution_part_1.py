@@ -13,31 +13,33 @@ from int_computer import IntComputer as BOOSTComputer
      ([1102, 34915192, 34915192, 7, 4, 7, 99, 0], [1219070632396864]),
      ([104, 1125899906842624, 99], [1125899906842624]),
      ])
-def test_BOOST_computer(test_program, output):
+def test_boost_computer(test_program, output):
     b = BOOSTComputer(test_program)
     assert b.run_program()
     assert b.outputs == output
 
 
 @pytest.mark.parametrize(
-    'test_program, input, output',
+    'test_program, inputs, output',
     [
         ([9, 1, 203, 7, 4, 8, 99, 0, 0], [42], [42])
-     ])
-def test_BOOST_computer_kevins_test(test_program, input, output):
-    b = BOOSTComputer(test_program, inputs=input)
+    ])
+def test_boost_computer_kevins_test(test_program, inputs, output):
+    b = BOOSTComputer(test_program, inputs=inputs)
     assert b.run_program()
     assert b.outputs == output
 
+
 @pytest.mark.parametrize(
-    'test_program, input, output',
+    'test_program, inputs, output',
     [
         ([9, 1, 203, 7, 4, 8, 99, 0, 0], [42], [42])
-     ])
-def test_pause_on_output(test_program, input, output):
-    b = BOOSTComputer(test_program, inputs=input, pause_on_output=True)
-    assert not b.run_program() # False because has not completed, merely paused on output.
+    ])
+def test_pause_on_output(test_program, inputs, output):
+    b = BOOSTComputer(test_program, inputs=inputs, pause_on_output=True)
+    assert not b.run_program()  # False because has not completed, merely paused on output.
     assert b.outputs == output
+
 
 def test_solve_part_1():
     assert solve_part_1() == [3765554916]

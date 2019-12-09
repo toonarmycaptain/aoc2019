@@ -42,6 +42,7 @@ def solve_part_1(intcode_program: List[int] = parse_puzzle_input()):
         sequences.append(output)
     return max(sequences)
 
+
 """
 solve_part_1(parse_puzzle_input()) = 440880
 """

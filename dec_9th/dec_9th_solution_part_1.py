@@ -20,5 +20,3 @@ def solve_part_1():
 """
 solve_part_1() =3765554916
 """
-
-print(solve_part_1())

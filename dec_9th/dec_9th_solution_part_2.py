@@ -9,6 +9,7 @@ def solve_part_2():
     c.run_program()
     return c.outputs
 
+
 """
 solve_part_2() = 76642
 """
