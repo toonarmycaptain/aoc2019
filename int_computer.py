@@ -1,4 +1,5 @@
 from typing import List, Dict, Optional
+from collections import defaultdict
 
 
 class IntComputer:
@@ -29,14 +30,20 @@ class IntComputer:
         * Abstract parsing modes to find position of arg into function
             mode_based_arg_position
         * Add relative_base instance var, relative_base parameter support.
-        * Add relative_base kwonly arg to provide initial value for self.relative_base
+        * Add relative_base kwonly arg to provide initial value for
+            self.relative_base
+        * Use dict for IntCode program, with position as key, allowing large
+            positions to be added and referenced without memory and lookup
+            penalties.
+        * Modify to use default dict, with default value 0
 
 
 
         :param intcode_program:
         :param inputs:
         """
-        self._intcode_program: Dict[int, int] = {position: value for position, value in enumerate(intcode_program)}
+        self._intcode_program: Dict[int, int] = defaultdict(lambda: 0, {position: value for position, value in
+                                                                        enumerate(intcode_program)})
         self.pointer_index = pointer_index
         self.relative_base = relative_base
         self.pause_on_output = pause_on_output
@@ -104,11 +111,8 @@ class IntComputer:
         Checks if position in intcode program exists, creating indexes in
         _intcode_program initialised with value 0 if it does not.
         """
-        # if position > len(self._intcode_program):
-        #     self._intcode_program += [0 for _ in
-        #                               range(max(self._intcode_program) - len(self._intcode_program))]
-        if not self._intcode_program.get(position, None):
-            self._intcode_program[position] = 0
+        # if not self._intcode_program.get(position, None):
+        #     self._intcode_program[position] = 0
         return self._intcode_program[position]
 
     def addiction_opcode(self, position: int):
