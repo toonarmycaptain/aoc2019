@@ -69,8 +69,7 @@ class IntComputer:
                               }
 
     def input_generator(self):
-        for i in self.inputs:
-            yield i
+        yield from self.inputs
 
     def run_program(self) -> Optional[bool]:
 
