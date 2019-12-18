@@ -130,11 +130,11 @@ def parse_puzzle_input(file=None) -> Dict[str, Tuple[int, Dict[str, int]]]:
 
 
 def find_ore_needed_for_fuel(equations: Dict[str, Tuple[int, Dict[str, int]]], fuel_quantity_needed: int):
-    needed = {'FUEL': fuel_quantity_needed}
+    needed_resources = {'FUEL': fuel_quantity_needed}
     unused_reactants: dict = defaultdict(int)  # Equivalent of defaultdict(lambda: int())
-    while needed.keys() != {'ORE'}:
+    while needed_resources.keys() != {'ORE'}:
         needed_next: dict = defaultdict(int)
-        for product, product_quantity in needed.items():
+        for product, product_quantity in needed_resources.items():
             if product == 'ORE':
                 needed_next['ORE'] += product_quantity
                 continue
@@ -152,9 +152,9 @@ def find_ore_needed_for_fuel(equations: Dict[str, Tuple[int, Dict[str, int]]], f
             needed_next[unused_reactant_name] -= quantity_used
             unused_reactants[unused_reactant_name] -= quantity_used
 
-        needed = {product_name: product_quantity for product_name, product_quantity in needed_next.items() if product_quantity}
+        needed_resources = {product_name: product_quantity for product_name, product_quantity in needed_next.items() if product_quantity}
 
-    return needed['ORE']
+    return needed_resources['ORE']
 
 
 def solve_part_1(equations: Dict[str, Tuple[int, Dict[str, int]]]):

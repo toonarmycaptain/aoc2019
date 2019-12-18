@@ -1,0 +1,1 @@
+"""Advent of Code solution December 15th part 2"""
